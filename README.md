@@ -43,7 +43,81 @@ The training and testing scripts expect data to be stored in SQLite database (.d
 
 The data_loader.py script will handle reading these JSON strings, converting them to NumPy arrays, and performing min-max normalization on the spectra.
 
-## 
+## How to Run a Training Job
+Follow this three-step guide to configure and launch a new training experiment.
 
+### Step 1: Configure Your Experiment in the Script
+
+All experiment parameters are defined directly within the create_config.py script. Before running anything, you must first edit this file.
+
+Open create_config.py and modify the config_data dictionary to match your setup:
+
+**Crucial**: Update the data section with the absolute paths to your SQLite database files.
+
+```
+# Inside create_config.py
+      config_data = {
+            # ...
+            "data": {
+                  "train_db_names": [
+                        r"/path/to/your/train.db"
+                  ],
+                  "test_db_names": [
+                        r"/path/to/your/test.db"
+                  ],
+            },
+            # ...
+      }
+```
+
+**Recommended**: Adjust other parameters as needed, such as `learning_rate`, `epoch`, `batch_size`, and the list of `losses` to use.
+
+### Step 2: Generate the Final Configuration File
+
+After saving your changes to `create_config.py`, run the script from your terminal.
+
+```
+python create_config.py
+```
+
+This will create a file named `config` inside the `configs/` directory. This file contains the finalized settings from the script and is now ready to be used for training.
+
+### Step 3: Start the Training
+
+Now, you can start the training process using `main.py`. This script reads the settings from your newly generated configs/config file and uses the other command-line arguments to launch the experiment.
+
+You must provide the path to your config file and the `model_type` you wish to train.
+
+**Training Commands**:
+
+* To train the standard CGSVAE for unmixing:
+
+```
+python main.py --config_file configs/config --model_type CGSVAE
+```
+
+* To train the conditional cCGSVAE for generation:
+
+```
+python main.py --config_file configs/config --model_type cCGSVAE
+```
+
+
+* To train the InCGSVAE for inpainting:
+
+```
+python main.py --config_file configs/config --model_type InCGSVAE
+```
+
+## Output
+After running a training job, a new directory will be created under `output/` (or your specified --logdir). The directory will be named with a unique run ID (e.g., 20250826_225303_a1b2c3d4). Inside this directory, you will find:
+
+`model_run_[run_id].log`: A detailed log file of the entire training process.
+
+`config_[run_id].json`: A copy of the exact configuration used for the run.
+
+`output_[run_id].db`: An SQLite database containing the training and testing loss values for each epoch.
+
+`checkpoints/`: A folder containing the saved model weights (.pth files) at specified intervals.
 
   
