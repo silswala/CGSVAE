@@ -1,5 +1,5 @@
 # CGSVAE: A Deep Learning Toolkit for Gamma Spectrum Analysis
-This repository contains a PyTorch-based toolkit for the quantitative analysis, conditional generation, and inpainting of low-resolution Plastic Scintillator(PS) gamma-ray spectra using Composition-Guided Variational Autoencoders (VAEs).
+This repository contains a pyTorch-based toolkit for the quantitative analysis, conditional generation, and inpainting of low-resolution Plastic Scintillator(PS) gamma-ray spectra using Composition-Guided Variational Autoencoders (VAEs).
 
 ## Overview
 Working with low-resolution plastic scintillator detector spectrum presents a challenge: The spectrum often broad and featureless, making it difficult to determine which radioactive sources are present and in what amounts. This toolkit provides a flexible framework and three specialized VAE models to address this problem by learning the underlying composition of complex spectra.
